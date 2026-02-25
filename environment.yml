@@ -1,0 +1,64 @@
+name: app-env
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+
+dependencies:
+  - python=3.11
+  - pip
+  - wheel
+
+  # Core Data Science
+  - pandas=2.2.*
+  - numpy<2.0
+  - scipy
+
+  # Visualization
+  - matplotlib=3.8.*
+  - seaborn=0.13.*
+  - plotly>=5.24.0
+  - wordcloud
+  - pillow
+
+  # Utils / Jupyter
+  - reportlab
+  - openpyxl
+  - tqdm
+  - regex
+  - ipykernel
+  - ipywidgets
+  - nbformat
+  - notebook
+  - jupyterlab
+
+  # ML Backend (CPU)
+  - pytorch
+  - torchvision
+  - torchaudio
+  - cpuonly
+
+  # PIP PACKAGES (LOCKED)
+  - pip:
+      # SETFIT SAFE ZONE
+      - huggingface_hub==0.23.5
+      - sentence-transformers==2.7.0
+      - setfit==1.0.3
+
+      # NLP
+      - transformers==4.41.2
+      - tokenizers==0.19.1
+      - accelerate==0.33.0
+      - safetensors>=0.4.2
+      - datasets==2.19.1
+      - scikit-learn>=1.4.0
+      - evaluate
+      - demoji
+
+      # WEB / API
+      - streamlit
+      - reportlab
+      - watchdog
+      - google-api-python-client
+      - google-genai
+      - python-dotenv
