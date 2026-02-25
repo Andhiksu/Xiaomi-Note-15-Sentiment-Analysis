@@ -753,24 +753,29 @@ except Exception:
 today_str = datetime.now().strftime("%d %B %Y")
 
 prompt = f"""
-Hari ini: {today_str}
+Tanggal: {today_str}
 
-Anda adalah Senior Data Scientist di Xiaomi Global Market Intelligence Team.
-Bayangkan Anda sedang menyusun laporan untuk meeting internal bersama:
-Product Manager, Head of Marketing, dan Lead MIUI Engineer.
+Anda berperan sebagai Senior Strategy Consultant yang ditugaskan oleh 
+Xiaomi Global Market Intelligence Team untuk menyusun laporan strategis 
+berbasis data sentimen pasar.
 
-Tugas Anda adalah menyusun:
-POST-LAUNCH MARKET INTELLIGENCE REPORT
-untuk produk: {TARGET_PRODUCT}
+Produk yang dianalisis:
+{TARGET_PRODUCT}
 
-Gunakan bahasa yang profesional namun tetap natural, tidak terlalu kaku,
-mudah dipahami oleh tim lintas fungsi (non-technical & technical).
+Laporan ini akan dipresentasikan kepada:
+- Country Manager
+- Head of Product
+- Marketing Director
+- Lead Software Engineer (MIUI)
 
-====================================================
-RINGKASAN DATA (YouTube Sentiment Intelligence)
-====================================================
+Gunakan tone profesional, strategic, dan insight-driven.
+Fokus pada keputusan dan implikasi bisnis — bukan sekadar deskripsi data.
 
-Total Komentar Dianalisis: {total_com}
+========================================================
+DATA INTELIJEN PASAR (YouTube Sentiment Analysis)
+========================================================
+
+Total Sampel: {total_com} komentar
 Brand Health Index (Net Sentiment): {net_sentiment:.1f} / 100
 
 Distribusi Sentimen:
@@ -778,58 +783,67 @@ Distribusi Sentimen:
 • Negatif : {neg_pct:.1f}%
 • Netral  : {neu_pct:.1f}%
 
-Winning Features (Paling Banyak Dipuji):
+Top Performing Features:
 {top_praises}
 
-Critical Pain Points (Paling Banyak Dikeluhkan):
+Top Pain Points:
 {top_complaints}
 
-====================================================
-INSTRUKSI PENYUSUNAN LAPORAN
-====================================================
+========================================================
+DELIVERABLE YANG DIHARAPKAN
+========================================================
 
-Buat laporan dengan struktur berikut:
+Susun laporan dengan struktur berikut:
 
-1. EXECUTIVE SUMMARY
-   - Tentukan status peluncuran: SUCCESS / WARNING / CRITICAL
-   - Jelaskan secara ringkas bagaimana penerimaan pasar saat ini
-   - Sorot 3 insight paling penting (bullet points)
+1. EXECUTIVE SUMMARY (1 halaman ringkas)
+   - Tentukan status peluncuran: STRONG / STABLE / AT RISK
+   - Jelaskan kondisi pasar saat ini secara objektif
+   - 3–5 key takeaways yang paling berdampak secara bisnis
 
-2. MARKET SENTIMENT ANALYSIS
-   - Apa yang paling disukai user? Kenapa itu penting secara bisnis?
-   - Apa yang paling mengganggu user? Apa potensi risikonya?
+2. MARKET DIAGNOSIS
+   - Apa kekuatan kompetitif utama produk ini?
+   - Dimana titik friksi terbesar user?
+   - Apakah keluhan bersifat sistemik atau minor?
 
-3. PRODUCT & HARDWARE ACTION PLAN
-   - Rekomendasi konkret dan realistis
-   - Urutkan berdasarkan prioritas (High / Medium / Low Impact)
-   - Jelaskan trade-off jika ada
+3. RISK ASSESSMENT
+   - Jika pain points tidak ditangani, apa implikasi 3–6 bulan ke depan?
+   - Risiko terhadap brand perception?
+   - Risiko terhadap repeat purchase / loyalty?
 
-4. SOFTWARE (MIUI / SYSTEM) ACTION PLAN
-   - Apakah ada indikasi bug, optimasi, atau UX friction?
-   - Rekomendasi update OTA atau patch strategy
+4. STRATEGIC PRIORITIES (90-Day Plan)
+   Kelompokkan menjadi:
+   - Immediate Fix (High Impact, Low Effort)
+   - Structural Improvement (High Impact, High Effort)
+   - Monitor Only (Low Impact)
 
-5. MARKETING & PR STRATEGY
-   - Fitur apa yang harus lebih di-highlight?
-   - Narasi apa yang perlu diperkuat?
-   - Apakah perlu counter-narrative terhadap keluhan tertentu?
+5. PRODUCT & ENGINEERING IMPLICATION
+   - Rekomendasi hardware adjustment (jika ada)
+   - Rekomendasi software / MIUI optimization
+   - Trade-off analysis jika diperlukan
 
-6. STRATEGIC OUTLOOK (Forward Looking)
-   - Jika tren ini berlanjut 3–6 bulan ke depan, apa implikasinya?
+6. MARKETING & POSITIONING STRATEGY
+   - Fitur mana yang harus di-double down?
+   - Narasi mana yang perlu dikontrol?
+   - Apakah perlu counter-positioning terhadap persepsi negatif?
+
+7. FORWARD OUTLOOK (Strategic View)
    - Apakah positioning produk ini sustainable?
+   - Apakah produk ini memiliki defensible advantage?
+   - Apakah perlu repositioning dalam segmen harga?
 
-====================================================
+========================================================
 GAYA PENULISAN
-====================================================
+========================================================
 
-- Gunakan tone profesional namun conversational
-- Hindari kalimat generik
-- Fokus pada insight, bukan hanya rekap data
+- Gunakan bahasa strategic namun natural
+- Hindari kalimat generik seperti “perlu ditingkatkan”
+- Setiap insight harus memiliki implikasi bisnis
 - Berikan rekomendasi yang actionable dan realistis
-- Jangan bertele-tele, tapi tetap mendalam
+- Gunakan bullet points jika membantu clarity
+- Hindari terlalu teknis kecuali relevan untuk keputusan
 
-Bayangkan laporan ini akan dibaca langsung oleh Country Manager.
-
-Tuliskan laporan secara lengkap dan terstruktur rapi.
+Bayangkan laporan ini akan dibaca langsung oleh executive leadership team.
+Buat laporan yang ringkas namun powerful.
 """
 
 if "report_text" not in st.session_state:
