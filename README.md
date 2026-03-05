@@ -15,6 +15,9 @@ Proyek ini mengubah ribuan opini pengguna menjadi **insight strategis yang dapat
 
 Studi kasus: **Xiaomi Note 15 Series**
 
+**Catatan:**  
+File artefak training dan dataset berukuran besar tidak disertakan dalam repository ini untuk menjaga ukuran repository tetap ringan dan mudah diakses. Untuk mengakses versi lengkap file proyek (termasuk dataset dan artifacts), silakan unduh melalui Google Drive berikut: [Link Google Drive](https://drive.google.com/drive/folders/1Hg7Y_iZXviButfFkWlp_TIfZd7MrdJvM?usp=sharing)
+
 ---
 
 # Business Problem
