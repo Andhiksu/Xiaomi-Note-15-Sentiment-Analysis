@@ -1,4 +1,4 @@
-# YouTube Review Sentiment Analysis for Enterprise Insights
+# [YouTube](https://www.youtube.com) Review Sentiment Analysis for Enterprise Insights
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![NLP](https://img.shields.io/badge/NLP-Sentiment%20Analysis-orange)
 ![Machine Learning](https://img.shields.io/badge/Machine%20Learning-SetFit-green)
@@ -9,11 +9,11 @@
 ![LLM](https://img.shields.io/badge/LLM-Gemini%20API-purple)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-End-to-end NLP pipeline untuk menganalisis persepsi pasar terhadap produk smartphone berdasarkan komentar review YouTube.
+End to end NLP pipeline untuk menganalisis persepsi pasar terhadap produk smartphone berdasarkan komentar review [YouTube](https://www.youtube.com).
 
 Proyek ini mengubah ribuan opini pengguna menjadi **insight strategis yang dapat digunakan oleh tim produk, marketing, dan engineering untuk pengambilan keputusan berbasis data.**
 
-Studi kasus: **Xiaomi Note 15 Series**
+Studi kasus: **[Xiaomi Note 15 Series](https://www.mi.co.id/id/event/redmi-note-15-series/?utm_campaign=micom_id_search_brand&utm_source=google&utm_medium=paid-search&utm_type=1&utm_content=rn15_0122-0228&utm_id=2325&gad_source=1&gad_campaignid=1766176000&gbraid=0AAAAAC9UrG1GT_rml6bMwfuTuLIHFRXW_&gclid=Cj0KCQiA-YvMBhDtARIsAHZuUzIfccDQHqSIW9QL3cQlgclHA2lBOH539bvOnOzGdk0gMC80ztQRPKgaApabEALw_wcB)**
 
 **Catatan:**  
 File artefak training dan dataset berukuran besar tidak disertakan dalam repository ini untuk menjaga ukuran repository tetap ringan dan mudah diakses. Untuk mengakses versi lengkap file proyek (termasuk dataset dan artifacts), silakan unduh melalui Google Drive berikut: [Link Google Drive](https://drive.google.com/drive/folders/1Hg7Y_iZXviButfFkWlp_TIfZd7MrdJvM?usp=sharing)
@@ -22,7 +22,7 @@ File artefak training dan dataset berukuran besar tidak disertakan dalam reposit
 
 # Business Problem
 
-Review teknologi di YouTube sering menghasilkan ribuan komentar pengguna yang berisi opini tentang produk.
+Review teknologi di [YouTube](https://www.youtube.com) sering menghasilkan ribuan komentar pengguna yang berisi opini tentang produk.
 
 Namun bagi perusahaan, tantangan utamanya adalah:
 
@@ -111,7 +111,7 @@ Proyek ini menggunakan pipeline Natural Language Processing (NLP) untuk mengubah
      - Fitur yang menjadi keunggulan utama produk
      - Fitur yang berpotensi menjadi pain point bagi pengguna
 
-8. **Strategic Insight Generation**, Insight yang dihasilkan dari analisis data kemudian dirangkum menjadi laporan strategis menggunakan Large Language Model (LLM) melalui Gemini Pro API. Pendekatan ini membantu mengubah hasil analisis teknis menjadi rekomendasi bisnis yang lebih mudah dipahami oleh stakeholder.
+8. **Strategic Insight Generation**, Insight yang dihasilkan dari analisis data kemudian dirangkum menjadi laporan strategis menggunakan Large Language Model (LLM) melalui [Gemini Pro API](https://aistudio.google.com). Pendekatan ini membantu mengubah hasil analisis teknis menjadi rekomendasi bisnis yang lebih mudah dipahami oleh stakeholder.
    - Dengan memanfaatkan teknik prompt engineering, model AI menghasilkan laporan yang berisi:
      - Executive summary
      - Diagnosa persepsi pasar
