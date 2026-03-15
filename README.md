@@ -51,7 +51,7 @@ Fokus utamanya:
 
 - **4,722** komentar YouTube dianalisis
 - **1,071** sampel labeling dibuat dengan distribusi seimbang (357 per kelas)
-- **94.40%** agreement antara LLM assist dan human-corrected labels
+- **94.40%** agreement antara LLM assist dan human-corrected labels dengan durasi 2.14 menit menggunakan metode eksekusi Paralel dengan `ThreadPoolExecutor`
 - Model improved from: Accuracy: **0.52** → **0.80** dan Macro F1: **0.48** → **0.68**
 - Pain point utama teridentifikasi pada: **Desain** & **Kamera**
 - Output akhir mencakup:
@@ -79,7 +79,7 @@ Fokus utamanya:
 1.	**Data Collection**, Mengumpulkan komentar menggunakan [YouTube Data API v3](https://developers.google.com/youtube/v3/getting-started) dari beberapa channel reviewer gadget Indonesia.
 2.	**Text Preprocessing**, Membersihkan teks melalui normalisasi slang, penghapusan emoji/karakter tidak relevan, dan filtering komentar kosong.
 3.	**Hybrid Baseline Sentiment Analysis**, Menggunakan [IndoBERT](https://huggingface.co/w11wo/indonesian-roberta-base-sentiment-classifier) + keyword boosting sebagai baseline awal.
-4.	**LLM-Assisted Labeling**, Membuat template labeling terstratifikasi sebanyak **1,071 sampel** dengan menggunakan [Gemini 3 Flash Preview](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/) untuk memberi pre-label dan catatan awal sebelum dikoreksi manusia dan mendapatkan tingkat persetujuan (*agreement rate*) sebesar **94.40%** antara AI dan manusia.
+4.	**LLM-Assisted Labeling**, Membuat template labeling terstratifikasi sebanyak **1,071 sampel** dengan menggunakan [Gemini 3 Flash Preview](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/) untuk memberi pre-label dan catatan awal sebelum dikoreksi manusia.
 5.	**Gold Dataset & Fixed Split**, Menyusun gold dataset hasil koreksi manusia lalu membaginya menjadi:
    - Train: **642**
 	- Validation: **214**
