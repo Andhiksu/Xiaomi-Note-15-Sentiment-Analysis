@@ -79,7 +79,7 @@ Fokus utamanya:
 1.	**Data Collection**, Mengumpulkan komentar menggunakan [YouTube Data API v3](https://developers.google.com/youtube/v3/getting-started) dari beberapa channel reviewer gadget Indonesia.
 2.	**Text Preprocessing**, Membersihkan teks melalui normalisasi slang, penghapusan emoji/karakter tidak relevan, dan filtering komentar kosong.
 3.	**Hybrid Baseline Sentiment Analysis**, Menggunakan [IndoBERT](https://huggingface.co/w11wo/indonesian-roberta-base-sentiment-classifier) + keyword boosting sebagai baseline awal.
-4.	**LLM-Assisted Labeling**, Membuat template labeling terstratifikasi sebanyak **1,071 sampel**, lalu menggunakan [Gemini 3 Flash Preview](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/) untuk memberi pre-label dan catatan awal sebelum dikoreksi manusia.
+4.	**LLM-Assisted Labeling**, Membuat template labeling terstratifikasi sebanyak **1,071 sampel** dengan menggunakan [Gemini 3 Flash Preview](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/) untuk memberi pre-label dan catatan awal sebelum dikoreksi manusia dan mendapatkan tingkat persetujuan (*agreement rate*) sebesar **94.40%** antara AI dan manusia.
 5.	**Gold Dataset & Fixed Split**, Menyusun gold dataset hasil koreksi manusia lalu membaginya menjadi:
    - Train: **642**
 	- Validation: **214**
@@ -116,15 +116,34 @@ Evaluasi dilakukan pada fixed test set (215 data) agar perbandingan model tetap 
 >Fine-tuning memberi lompatan performa terbesar, sedangkan Active Learning membantu memperbaiki kualitas klasifikasi antar kelas, terutama pada area yang sebelumnya menjadi blind spot model.
 
 ---
+
+# Aspect-Based Insight Summary
+Berikut ringkasan aspek (diurutkan berdasarkan total mention descending):
+
+| Aspek       | Total Mention | Avg Sentiment | % Negative | % Neutral | % Positive | Z-Score     | Status Z-Score | Status Absolut (berdasarkan avg) |
+|:------------|---------------|---------------|------------|-----------|------------|-------------|----------------|----------------------------------|
+| **desain**  | 519           | -0.809        | 84.0%      | 12.9%     | 3.1%       | **-1.95**   | 🔴 Negatif     | 🔴 Negatif                       |
+| **kamera**  | 489           | -0.654        | 68.7%      | 28.0%     | 3.3%       | **-1.28**   | 🔴 Negatif     | 🔴 Negatif                       |
+| **harga**   | 272           | -0.452        | 53.3%      | 38.6%     | 8.1%       | -0.41       | 🟡 Netral      | 🔴 Negatif                       |
+| **performa**| 188           | -0.256        | 33.5%      | 58.5%     | 8.0%       | +0.44       | 🟡 Netral      | 🔴 Negatif                       |
+| **software**| 163           | -0.270        | 30.1%      | 66.9%     | 3.1%       | +0.38       | 🟡 Netral      | 🔴 Negatif                       |
+| **baterai** | 162           | -0.160        | 22.8%      | 70.4%     | 6.8%       | **+0.85**   | 🟢 Positif     | 🔴 Negatif                       |
+| **layar**   | 161           | -0.217        | 34.2%      | 53.4%     | 12.4%      | +0.60       | 🟢 Positif     | 🔴 Negatif                       |
+| **thermal** | 31            | -0.194        | 22.6%      | 74.2%     | 3.2%       | +0.71       | 🟢 Positif     | 🔴 Negatif                       |
+| **charging**| 20            | -0.200        | 20.0%      | 80.0%     | 0.0%       | +0.68       | 🟢 Positif     | 🔴 Negatif                       |
+
+
+
+---
 # Training Infrastructure
 
 Performa fine-tuning diuji pada beberapa environment cloud:
 
-| Environment | Hardware | Training Time |
-|-------------|----------|---------------|
-| MacBook Air M3 | CPU | ~7 jam |
-| Microsoft Azure VM | CPU (16 Core) | ~32 menit |
-| Google Cloud VM | GPU (NVIDIA L4) | ~17 menit |
+| No | Hardware                        | Spesifikasi                                                                 | Mode Training     | Waktu Training (1 run) | Keterangan                                                                 |
+|----|---------------------------------|-----------------------------------------------------------------------------|-------------------|------------------------|----------------------------------------------------------------------------|
+| 1  | Local – MacBook Air M3  | • CPU 8-core<br>• GPU hingga 10-core<br>• RAM 16 GB                        | CPU-based         | > 387 menit                | Cukup untuk eksperimen awal, namun proses fine-tuning relatif lambat karena keterbatasan resource |
+| 2  | Microsoft Azure VM              | • 16 core CPU<br>• 32 thread<br>• 128 GB RAM                               | CPU-based         | ± 32 menit             | Peningkatan jumlah core dan RAM mempercepat proses secara signifikan dibanding local machine |
+| 3  | Google Cloud VM (GPU-Enabled)   | • 2 core CPU<br>• 4 thread<br>• 16 GB RAM<br>• Nvidia L4 GPU              | GPU-based         | ± 17 menit             | GPU (Nvidia T4) memberikan percepatan ~2× dibanding CPU cloud dan jauh lebih efisien dibanding local machine |
 
 Benchmark ini menunjukkan peningkatan efisiensi training secara signifikan ketika menggunakan GPU.
 
