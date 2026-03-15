@@ -16,7 +16,7 @@ Proyek ini mengubah ribuan opini pengguna menjadi **insight strategis yang dapat
 Studi kasus: **[Xiaomi Note 15 Series](https://www.mi.co.id/id/event/redmi-note-15-series/?utm_campaign=micom_id_search_brand&utm_source=google&utm_medium=paid-search&utm_type=1&utm_content=rn15_0122-0228&utm_id=2325&gad_source=1&gad_campaignid=1766176000&gbraid=0AAAAAC9UrG1GT_rml6bMwfuTuLIHFRXW_&gclid=Cj0KCQiA-YvMBhDtARIsAHZuUzIfccDQHqSIW9QL3cQlgclHA2lBOH539bvOnOzGdk0gMC80ztQRPKgaApabEALw_wcB)**
 
 **Catatan:**  
-File artefak training dan dataset berukuran besar tidak disertakan dalam repository ini untuk menjaga ukuran repository tetap ringan dan mudah diakses. Untuk mengakses file versi lengkap (termasuk dataset dan artifacts), silakan unduh melalui Google Drive berikut: [Link Google Drive](https://drive.google.com/drive/folders/1Hg7Y_iZXviButfFkWlp_TIfZd7MrdJvM?usp=sharing)
+File artefak training dan dataset berukuran besar tidak disertakan dalam repository ini untuk menjaga ukuran repository tetap ringan dan mudah diakses. Untuk mengakses file versi lengkap (termasuk dataset dan artifacts), silakan unduh melalui Google Drive berikut: [Link Google Drive](https://drive.google.com/drive/folders/1E2ck24tSE-F20OZ7SpKXIl8G-yECTRD8?usp=sharing)
 
 ---
 
