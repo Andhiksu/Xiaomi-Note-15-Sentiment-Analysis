@@ -37,7 +37,7 @@ except Exception:
 
 
 # Konfigurasi Streamlit
-st.set_page_config(page_title="Xiaomi Sentiment Dashboard", page_icon="📊", layout="wide")
+st.set_page_config(page_title="Xiaomi Sentiment Dashboard", page_icon="https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg", layout="wide")
 
 # Set seaborn theme
 sns.set_theme(style="whitegrid", palette="muted")
@@ -190,6 +190,7 @@ def load_data(path: Path):
     df_exploded = df.explode("aspects").copy()
     df_exploded["aspects"] = df_exploded["aspects"].astype(str).str.strip().str.lower()
     return df, df_exploded
+
 # Aspek Summary dengan Z-Score untuk Bar Chart
 def make_aspect_summary(df_exploded):
     df_use = df_exploded[df_exploded["aspects"] != "umum"].copy()
@@ -203,6 +204,7 @@ def make_aspect_summary(df_exploded):
     std_val = aspect_summary["avg_sentiment"].std()
     aspect_summary["z_score"] = 0 if std_val == 0 or np.isnan(std_val) else zscore(aspect_summary["avg_sentiment"])
     return aspect_summary
+
 # Aspek Distribution untuk Bar Chart & Heatmap
 def make_aspect_distribution(df_exploded):
     df_use = df_exploded[df_exploded["aspects"] != "umum"].copy()
@@ -391,7 +393,8 @@ def build_pdf_from_text(raw_text: str, output_pdf: Path):
 
 
 # UI Rendering
-st.title("📊 Xiaomi Sentiment Analysis Dashboard")
+st.image("https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg", width=150)
+st.title("Xiaomi Sentiment Analysis Dashboard")
 
 try:
     df, df_exploded = load_data(DATA_PATH)
@@ -401,14 +404,13 @@ except Exception as e:
 
 # Sidebar Controls
 with st.sidebar:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/a/ae/Xiaomi_logo_%282021-%29.svg", width=60)
-    st.header("⚙️ Controls")
+    st.header("Controls")
 
     min_mentions = st.slider("Min Mentions (Aspect Noise Filter)", 5, 100, 30, 5)
     topk = st.slider("Top-K Pain/Positive", 3, 10, 5, 1)
 
     st.markdown("---")
-    with st.expander("🔎 Data Filters", expanded=True):
+    with st.expander("Data Filters", expanded=True):
         keyword = st.text_input("Search Keyword", value="")
         channels = sorted(df["source_channel"].dropna().unique().tolist()) if "source_channel" in df.columns else []
         selected_channels = st.multiselect("Source Channel", options=channels, default=channels)
@@ -457,9 +459,9 @@ st.markdown(
 st.markdown(f"""
 <div class="kpi-grid">
   <div class="kpi-card"><div class="kpi-title">Total Data</div><div class="kpi-main">{len(df_view):,}</div><div class="kpi-sub">Komentar Tervaluasi</div></div>
-  <div class="kpi-card"><div class="kpi-title">Positif 😊</div><div class="kpi-main">{sent_counts.get("positive",0):,}</div><div class="kpi-sub">{sent_pct.get("positive",0):.1f}%</div></div>
-  <div class="kpi-card"><div class="kpi-title">Negatif 😡</div><div class="kpi-main">{sent_counts.get("negative",0):,}</div><div class="kpi-sub">{sent_pct.get("negative",0):.1f}%</div></div>
-  <div class="kpi-card"><div class="kpi-title">Netral 😐</div><div class="kpi-main">{sent_counts.get("neutral",0):,}</div><div class="kpi-sub">{sent_pct.get("neutral",0):.1f}%</div></div>
+  <div class="kpi-card"><div class="kpi-title">Positif</div><div class="kpi-main">{sent_counts.get("positive",0):,}</div><div class="kpi-sub">{sent_pct.get("positive",0):.1f}%</div></div>
+  <div class="kpi-card"><div class="kpi-title">Negatif</div><div class="kpi-main">{sent_counts.get("negative",0):,}</div><div class="kpi-sub">{sent_pct.get("negative",0):.1f}%</div></div>
+  <div class="kpi-card"><div class="kpi-title">Netral</div><div class="kpi-main">{sent_counts.get("neutral",0):,}</div><div class="kpi-sub">{sent_pct.get("neutral",0):.1f}%</div></div>
   <div class="kpi-card"><div class="kpi-title">Net Sentiment</div><div class="kpi-main">{net_sentiment:.1f}</div><div class="kpi-sub"><span class="kpi-pill">BHI Score</span></div></div>
 </div>
 """, unsafe_allow_html=True)
@@ -467,7 +469,13 @@ st.markdown(f"""
 st.markdown("---")
 
 # TABS untuk berbagai analisis
-tab1, tab2, tab3, tab4 = st.tabs(["📋 Data Table", "📊 Aspect Analysis", "🔥 Cross-Channel", "🤖 Executive Report (AI)"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "Data Table", 
+    "Aspect Analysis", 
+    "Cross-Channel", 
+    "Executive Report (AI)", 
+    "AI Assistant"
+])
 
 # TAB 1: Data Table View
 with tab1:
@@ -476,7 +484,7 @@ with tab1:
     if table_cols:
         df_table = df_view[table_cols].rename(columns={"source_channel": "Channel", "author": "User", "text": "Komentar", LABEL_COL_FINAL: "Sentimen"})
         st.dataframe(df_table, use_container_width=True, height=400)
-        st.download_button("⬇️ Download CSV", data=df_table.to_csv(index=False).encode("utf-8"), file_name="filtered_sentiment.csv", mime="text/csv")
+        st.download_button("Download CSV", data=df_table.to_csv(index=False).encode("utf-8"), file_name="filtered_sentiment.csv", mime="text/csv")
     else:
         st.warning("Kolom tidak lengkap untuk ditampilkan.")
 
@@ -517,7 +525,7 @@ with tab4:
     aspect_lines = []
     for aspect, row in aspect_summary.sort_values("z_score", ascending=False).iterrows():
         d = aspect_dist.loc[aspect] if aspect in aspect_dist.index else {"positive_rate":0, "negative_rate":0, "neutral_rate":0}
-        aspect_lines.append(f"• {aspect:12} | Z:{row['z_score']:+4.2f} | Mnt:{int(row['total_mentions']):3} | Pos:{d.get('positive_rate',0)*100:4.1f}% | Neg:{d.get('negative_rate',0)*100:4.1f}%")
+        aspect_lines.append(f"- {aspect:12} | Z:{row['z_score']:+4.2f} | Mnt:{int(row['total_mentions']):3} | Pos:{d.get('positive_rate',0)*100:4.1f}% | Neg:{d.get('negative_rate',0)*100:4.1f}%")
 
     top_complaints = "\n".join([f"- {idx} (Z: {row['z_score']:.2f})" for idx, row in aspect_summary[aspect_summary["total_mentions"] >= min_mentions].sort_values("z_score").head(3).iterrows()])
     top_praises = "\n".join([f"- {idx} (Z: {row['z_score']:.2f})" for idx, row in aspect_summary[aspect_summary["total_mentions"] >= min_mentions].sort_values("z_score", ascending=False).head(3).iterrows()])
@@ -562,13 +570,13 @@ STRUKTUR WAJIB:
     if "report_text" not in st.session_state: st.session_state["report_text"] = ""
     if "pdf_ready" not in st.session_state: st.session_state["pdf_ready"] = False
 
-    if st.button("🚀 Generate AI Report & Build PDF", type="primary"):
+    if st.button("Generate AI Report & Build PDF", type="primary"):
         with st.spinner(f"Analisis data menggunakan {MODEL_NAME}..."):
             try:
                 st.session_state["report_text"] = generate_report_text(prompt)
                 build_pdf_from_text(st.session_state["report_text"], PDF_PATH)
                 st.session_state["pdf_ready"] = True
-                st.success("✅ Report & PDF berhasil di-generate!")
+                st.success("Report & PDF berhasil di-generate! Silakan buka tab 'AI Assistant' untuk tanya jawab terkait laporan ini.")
             except Exception as e:
                 st.error(f"Gagal generate report: {e}")
 
@@ -577,8 +585,97 @@ STRUKTUR WAJIB:
 
     if st.session_state["pdf_ready"] and PDF_PATH.exists():
         st.download_button(
-            label="📄 Download Executive Report (.PDF)",
+            label="Download Executive Report (.PDF)",
             data=PDF_PATH.read_bytes(),
             file_name=f"Report_{TARGET_PRODUCT.replace(' ','_')}.pdf",
             mime="application/pdf"
         )
+
+# TAB 5: FITUR BARU - DISKUSI CHAT DENGAN AI (CLEAN UI)
+with tab5:
+    st.subheader("Executive Strategy Assistant")
+    st.markdown("Gali insight lebih dalam, minta saran mitigasi, atau diskusikan detail eksekusi strategi dari data sentimen Anda.")
+
+    # Inisialisasi history chat di session state
+    if "chat_messages" not in st.session_state:
+        st.session_state["chat_messages"] = []
+
+    # Container khusus untuk chat history dengan tinggi tetap agar bisa di-scroll (Chat Window)
+    chat_container = st.container(height=500, border=True)
+
+    with chat_container:
+        # Tampilkan welcome message & suggestions jika kosong
+        if len(st.session_state["chat_messages"]) == 0:
+            st.info(
+                "**Halo! Saya AI Strategy Assistant Anda.**\n\n"
+                "Saya telah memahami data sentimen Xiaomi saat ini. Anda bisa bertanya seperti:\n"
+                "- *'Apa 3 langkah pertama untuk memperbaiki persepsi negatif pada kamera?'*\n"
+                "- *'Bagaimana cara mempromosikan fitur charging kita yang mendapat sentimen sangat positif?'*\n"
+                "- *'Buat draft email laporan singkat ke tim RnD terkait isu overheat.'*"
+            )
+        
+        # Tampilkan history chat yang sudah ada
+        for message in st.session_state["chat_messages"]:
+            # Tanpa avatar parameter, Streamlit akan menggunakan ikon default bawaan yang elegan & bersih
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+    # Tangkap input user diletakkan di luar container agar tetap melekat di bawah
+    if prompt_chat := st.chat_input("Ketik pertanyaan Anda di sini..."):
+        
+        # Tampilkan bubble chat dari user segera setelah diketik
+        with chat_container:
+            with st.chat_message("user"):
+                st.markdown(prompt_chat)
+        
+        # Simpan ke history
+        st.session_state["chat_messages"].append({"role": "user", "content": prompt_chat})
+
+        # 1. Siapkan Konteks (Menggunakan laporan eksekutif dari Tab 4 jika ada)
+        context = "Anda adalah AI Assistant Data & Strategy Consultant untuk Xiaomi.\n"
+        if st.session_state.get("report_text"):
+            context += f"Gunakan Laporan Eksekutif berikut sebagai dasar/konteks utama jawaban Anda:\n{st.session_state['report_text']}\n\n"
+        else:
+            context += f"Catatan: Laporan eksekutif belum di-generate oleh user. Jawab secara umum namun tajam berdasarkan pengetahuan Anda sebagai analis data sentimen gadget.\n\n"
+
+        # 2. Rangkai Prompt Bersama Riwayat Percakapan (Memory)
+        history_prompt = context + "Riwayat Percakapan Sebelumnya:\n"
+        # Ambil history kecuali yang paling terakhir (karena yang terakhir adalah prompt saat ini)
+        for msg in st.session_state["chat_messages"][:-1]: 
+            role_name = "User" if msg["role"] == "user" else "AI"
+            history_prompt += f"{role_name}: {msg['content']}\n"
+        
+        # Tambahkan pertanyaan terbaru user
+        history_prompt += f"\nUser: {prompt_chat}\nAI:"
+
+        # Eksekusi Pemanggilan API Gemini
+        with chat_container:
+            with st.chat_message("assistant"):
+                with st.spinner("Menganalisis insight & merumuskan strategi..."):
+                    try:
+                        api_key = os.getenv("GEMINI_API_KEY")
+                        if not api_key:
+                            st.error("GEMINI_API_KEY belum diset. Pastikan file .env Anda sudah dikonfigurasi.")
+                        else:
+                            client = genai.Client(api_key=api_key)
+                            response = client.models.generate_content(
+                                model=MODEL_NAME,
+                                contents=history_prompt
+                            )
+                            ai_response = getattr(response, "text", None) or str(response)
+                            
+                            # Tampilkan ke layar dengan efek stream langsung (opsional, di sini render sekaligus)
+                            st.markdown(ai_response)
+                            
+                            # Simpan respon AI ke history
+                            st.session_state["chat_messages"].append({"role": "assistant", "content": ai_response})
+                    except Exception as e:
+                        st.error(f"Gagal memproses respons AI: {e}")
+    
+    # Tombol untuk membersihkan layar chat (diletakkan di luar, rapi di kanan bawah)
+    if len(st.session_state["chat_messages"]) > 0:
+        col_spacer, col_btn = st.columns([8, 2])
+        with col_btn:
+            if st.button("Clear Chat", use_container_width=True):
+                st.session_state["chat_messages"] = []
+                st.rerun()
