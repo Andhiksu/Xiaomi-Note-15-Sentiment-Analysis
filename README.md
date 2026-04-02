@@ -143,7 +143,7 @@ Performa fine-tuning diuji pada beberapa environment cloud:
 |----|---------------------------------|-----------------------------------------------------------------------------|-------------------|------------------------|----------------------------------------------------------------------------|
 | 1  | Local – MacBook Air M3  | • CPU 8-core<br>• GPU hingga 10-core<br>• RAM 16 GB                        | CPU-based         | > 387 menit                | Cukup untuk eksperimen awal, namun proses fine-tuning relatif lambat karena keterbatasan resource |
 | 2  | Microsoft Azure VM              | • 16 core CPU<br>• 32 thread<br>• 128 GB RAM                               | CPU-based         | ± 32 menit             | Peningkatan jumlah core dan RAM mempercepat proses secara signifikan dibanding local machine |
-| 3  | Google Cloud VM (GPU-Enabled)   | • 2 core CPU<br>• 4 thread<br>• 16 GB RAM<br>• Nvidia L4 GPU              | GPU-based         | ± 17 menit             | GPU (Nvidia T4) memberikan percepatan ~2× dibanding CPU cloud dan jauh lebih efisien dibanding local machine |
+| 3  | Google Cloud VM (GPU-Enabled)   | • 2 core CPU<br>• 4 thread<br>• 16 GB RAM<br>• Nvidia L4 GPU              | GPU-based         | ± 17 menit             | GPU (Nvidia L4) memberikan percepatan ~2× dibanding CPU cloud dan jauh lebih efisien dibanding local machine |
 
 Benchmark ini menunjukkan peningkatan efisiensi training secara signifikan ketika menggunakan GPU.
 
